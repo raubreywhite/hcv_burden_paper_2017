@@ -1,0 +1,27 @@
+year	needles	source
+1989	212 488	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1990	381 477	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1991	497 325	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1992	576 864	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1993	626 834	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1994	879 702	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1995	1 135 878	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1996	1 145 120	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1997	1 549 779	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1998	1 896 653	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+1999	1 719 140	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2000	1 870 200	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2001	1800000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2002	2000000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2003	1800000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2004	2000000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2005	1940500	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2006	1881000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2007	1821500	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2008	1762000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2009	1702500	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2010	1643000	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2011	1583500	Source: http://forebyggingepi.modulnet.com/en/Teori/Overordnede-perspektiver/Alkohol--og-narkotikapolitikk---samt-fakta-om-rusmidler/Narkotikasituasjonen-i-Norge/Kap-8---Skadereduksjon/
+2012	1511709	Source: Figures reported to the EMCDDA from SIRUS
+2013	1336958	Source: Figures reported to the EMCDDA from SIRUS
+2014	1041885	Source: Figures reported to the EMCDDA from SIRUS

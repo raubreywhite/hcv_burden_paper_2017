@@ -1,0 +1,472 @@
+---
+bibliography: references.bib
+csl: journal-of-hepatology.csl
+---
+
+```{r, echo=FALSE, strip.white=FALSE}
+m <- fread("../../../results/All_Summary_Estimate_machinefriendly.csv")
+l <- fread("../../../results/All_Summary_Lower_machinefriendly.csv")
+u <- fread("../../../results/All_Summary_Upper_machinefriendly.csv")
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable=="PWID" & prettyName=="Alive"]
+yearMaxPWID <- z[value==max(value)]$year
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable=="PWID" & prettyName=="Alive" & year==2013]
+mPWID2013 <- z$value
+z <- l[type=="OVERLAPPING PREVALENCE" & variable=="PWID" & prettyName=="Alive" & year==2013]
+lPWID2013 <- z$value
+z <- u[type=="OVERLAPPING PREVALENCE" & variable=="PWID" & prettyName=="Alive" & year==2013]
+uPWID2013 <- z$value
+
+z <- m[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute" & year==2013]
+value2013Incidence <- z[year==2013]$value
+
+z <- m[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute" & year==2015]
+value2015Incidence <- z[year==2015]$value
+
+z <- m[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute"]
+yearMaxIncidence <- z[value==max(value)]$year
+
+z <- m[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute"]
+mMaxIncidence <- z[value==max(value)]$value
+z <- l[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute"]
+lMaxIncidence <- z[value==max(value)]$value
+z <- u[type=="INCIDENCE" & variable=="PWID" & prettyName=="HCV+ acute"]
+uMaxIncidence <- z[value==max(value)]$value
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable=="PWID" & prettyName %in% c("Alive","HCV+ (incl. treatment)")]
+z <- dcast.data.table(z,"type+variable+year~prettyName")
+setnames(z,c("type","variable","year","alive","hcv"))
+z[,hepcPerc:=hcv/alive*100]
+yearMaxHCVPercPWID <- z[hepcPerc==max(hepcPerc)]$year
+valueMaxHCVPercPWID <- format(round(z[hepcPerc==max(hepcPerc)]$hepcPerc,1),nsmall=1)
+numeratorMaxHCVPercPWID <- z[hepcPerc==max(hepcPerc)]$hcv
+denominatorMaxHCVPercPWID <- z[hepcPerc==max(hepcPerc)]$alive
+
+yearMinHCVPercPWID <- z[hepcPerc==min(hepcPerc)]$year
+valueMinHCVPercPWID <- format(round(z[hepcPerc==min(hepcPerc)]$hepcPerc,1),nsmall=1)
+numeratorMinHCVPercPWID <- z[hepcPerc==min(hepcPerc)]$hcv
+denominatorMinHCVPercPWID <- z[hepcPerc==min(hepcPerc)]$alive
+
+###
+value2000HCVPercPWID <- format(round(z[year==2000]$hepcPerc,1),nsmall=1)
+numerator2000HCVPercPWID <- z[year==2000]$hcv
+denominator2000HCVPercPWID <- z[year==2000]$alive
+
+value2013HCVPercPWID <- format(round(z[year==2013]$hepcPerc,1),nsmall=1)
+numerator2013HCVPercPWID <- z[year==2013]$hcv
+denominator2013HCVPercPWID <- z[year==2013]$alive
+
+###
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable %in% c("Former.PWID.Will.Relapse","Former.PWID.Wont.Relapse") & prettyName %in% c("Alive","HCV+ (incl. treatment)")]
+z <- z[,.(value=sum(value)),by=.(type,prettyName,year)]
+z <- dcast.data.table(z,"type+year~prettyName")
+setnames(z,c("type","year","alive","hcv"))
+z[,hepcPerc:=hcv/alive*100]
+yearMaxHCVPercFormerPWID <- z[hepcPerc==max(hepcPerc)]$year
+valueMaxHCVPercFormerPWID <- format(round(z[hepcPerc==max(hepcPerc)]$hepcPerc,1),nsmall=1)
+numeratorMaxHCVPercFormerPWID <- z[hepcPerc==max(hepcPerc)]$hcv
+denominatorMaxHCVPercFormerPWID <- z[hepcPerc==max(hepcPerc)]$alive
+
+yearMinHCVPercFormerPWID <- z[hepcPerc==min(hepcPerc)]$year
+valueMinHCVPercFormerPWID <- format(round(z[hepcPerc==min(hepcPerc)]$hepcPerc,1),nsmall=1)
+numeratorMinHCVPercFormerPWID <- z[hepcPerc==min(hepcPerc)]$hcv
+denominatorMinHCVPercPFormerWID <- z[hepcPerc==min(hepcPerc)]$alive
+
+z <- m[type=="DISCRETE PREVALENCE" & variable %in% c("Total") & prettyName %in% c("Cirrhosis","HCC","Transplant")]
+z <- z[,.(value=sum(value)),by=.(year)]
+yearMaxCirHCCTrans <- min(z[value==max(value)]$year)
+valueMaxCirHCCTrans <- min(z[value==max(value)]$value)
+
+z <- m[type=="YEARLY MORTALITY" & variable %in% c("Total") & prettyName=="HCV related"]
+z <- z[,.(value=sum(value)),by=.(year)]
+yearMaxDeath <- min(z[value==max(value)]$year)
+valueMaxDeath <- min(z[value==max(value)]$value)
+
+## DALYS PWIDS
+z <- m[type=="DALYs" & variable %in% c("PWID")]
+z <- z[,.(value=sum(value)),by=.(year)]
+yearMaxDALYsPWID <- min(z[value==max(value)]$year)
+valueMaxDALYsPWID <- min(z[value==max(value)]$value)
+
+year2030DALYsPWID <- min(z[year==2030]$year)
+value2030DALYsPWID <- min(z[year==2030]$value)
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable %in% c("PWID") & prettyName=="Alive"]
+valuePer100kMaxDALYsPWID <- format(round(valueMaxDALYsPWID/min(z[year==yearMaxDALYsPWID]$value)*10000))
+valuePer100k2030DALYsPWID <- format(round(value2030DALYsPWID/min(z[year==2030]$value)*10000))
+
+
+## DALYS FORMER PWIDS
+z <- m[type=="DALYs" & variable %in% c("Former.PWID.Will.Relapse","Former.PWID.Wont.Relapse")]
+z <- z[,.(value=sum(value)),by=.(year)]
+yearMaxDALYsFormerPWID <- min(z[value==max(value)]$year)
+valueMaxDALYsFormerPWID <- min(z[value==max(value)]$value)
+
+year2030DALYsFormerPWID <- min(z[year==2030]$year)
+value2030DALYsFormerPWID <- min(z[year==2030]$value)
+
+z <- m[type=="OVERLAPPING PREVALENCE" & variable %in% c("Former.PWID.Will.Relapse","Former.PWID.Wont.Relapse") & prettyName=="Alive"]
+z <- z[,.(value=sum(value)),by=.(year)]
+valuePer100kMaxDALYsFormerPWID <- format(round(valueMaxDALYsFormerPWID/min(z[year==yearMaxDALYsFormerPWID]$value)*10000))
+valuePer100k2030DALYsFormerPWID <- format(round(value2030DALYsFormerPWID/min(z[year==2030]$value)*10000))
+
+## DALYS CHRONIC
+z <- m[type=="DALYs" & variable %in% c("Total") & prettyName=="HCV+ chronic"]
+yearMaxDALYsChronic <- min(z[value==max(value)]$year)
+valueMaxDALYsChronic <- min(z[value==max(value)]$value)
+
+year2030DALYsChronic <- min(z[year==2030]$year)
+value2030DALYsChronic <- min(z[year==2030]$value)
+
+z <- m[type=="DALYs" & variable %in% c("Total") & prettyName=="Cirrhosis"]
+yearMaxDALYsCirrhosis <- min(z[value==max(value)]$year)
+valueMaxDALYsCirrhosis <- min(z[value==max(value)]$value)
+
+year2030DALYsCirrhosis <- min(z[year==2030]$year)
+value2030DALYsCirrhosis <- min(z[year==2030]$value)
+
+z <- m[type=="DALYs" & variable %in% c("Total") & prettyName=="HCC"]
+yearMaxDALYsHCC <- min(z[value==max(value)]$year)
+valueMaxDALYsHCC <- min(z[value==max(value)]$value)
+
+year2030DALYsHCC <- min(z[year==2030]$year)
+value2030DALYsHCC <- min(z[year==2030]$value)
+
+## DALYS per 100k
+
+
+DALYs2013HCV <- readRDS(file="../../../results/DALYs2013HCV.RDS")
+DALYs2004HCV <- readRDS(file="../../../results/DALYs2004HCV.RDS")
+DALYs2010 <- readRDS(file="../../../results/DALYs2010.RDS")
+DALYs2015HCV <- readRDS(file="../../../results/DALYs2015HCV.RDS")
+maxDALYS <- readRDS(file="../../../results/maxDALYS.RDS")
+
+
+```
+
+# Modelling the burden of hepatitis C infection among people who inject drugs in Norway, 1973-2030
+
+Hinta Meijerink$^{1,2}$, Richard A White$^1$, Astrid Løvlie$^1$, Birgitte Freiesleben de Blasio$^{1,3}$, Olav Dalgard$^4$, Ellen Amundsen$^1$, Espen Melum$^{5,6,7}$, Hilde Kløvstad$^1$
+
+1	Norwegian Institute for Public Health, Oslo, Norway
+
+2 European Programme for Intervention Epidemiology Training (EPIET), European Centre for Disease Prevention and Control, (ECDC), Stockholm, Sweden
+
+3	Oslo Centre for Biostatistics and Epidemiology, Dept. of Biostatistics, Institute of Basic Medical Sciences, University of Oslo, Oslo, Norway
+
+4 Akershus University Hospital, and Medical Faculty, Oslo University
+
+5 Norwegian PSC Research Center, Division of Surgery, Inflammatory Medicine and Transplantation, Rikshospitalet, Oslo, Norway
+
+6	Section of Gastroenterology, Division of Surgery, Inflammatory Medicine and Transplantation, Oslo University Hospital, Oslo, Norway
+
+7	Research Institute of Internal Medicine, Division of Surgery, Inflammatory Medicine and Transplantation, Oslo University Hospital, Rikshospitalet, Oslo, Norway  
+
+##Abstract 
+
+###Background
+Hepatitis C viral (HCV) infection is  as a public health concern, leading to cirrhosis, hepatocellular carcinoma (HCC) and death. Lack of HCV incidence data in Norwegian high-risk groups impedes the ability to make informed decisions on prevention measures. Thus we rely on modelling to estimate the incidence and burden of HCV infections. 
+
+###Methods
+We constructed a compartmental model for HCV infections in Norway among active and former people who inject drugs (PWIDs). We based yearly transition rates on literature, the Norwegian Surveillance System for Communicable Diseases (MSIS), the death registry, and Norwegian Institute for Alcohol and Drug Research (SIRUS). The model was fitted to absolute numbers using data from 2000 to 2013 from SIRUS, national patient registry (NPR), Norwegian cancer registry (NCR), Nordic Liver Transplant Registry (NLTR) and cause of death registry. We estimated the number (95%CI) of HCV infections, cirrhosis, HCC and death due to HCV infections in Norway, 1973-2030.
+
+###Results
+The estimated proportion of HCV among PWIDs was relatively stable from 2000 (`r value2000HCVPercPWID`%; `r numerator2000HCVPercPWID`/`r denominator2000HCVPercPWID`) to 2013 (`r value2013HCVPercPWID`%; `r numerator2013HCVPercPWID`/`r denominator2013HCVPercPWID`). The estimated number of people with cirrhosis, HCC, and liver transplant attributable to HCV was predicted to increase until `r yearMaxCirHCCTrans` (`r valueMaxCirHCCTrans` people). DALYs among active PWIDs estimated to peak in `r yearMaxDALYsPWID` (`r valueMaxDALYsPWID` DALYs) and decrease to `r value2030DALYsPWID` DALYs in 2030. Our estimates show that chronic HCV infection contributes most to the total burden of HCV infection, and peaks at `r valueMaxDALYsChronic` DALYs (`r format(round(valueMaxDALYsChronic/m[type=="DALYs" & variable %in% "Total" & year==yearMaxDALYsChronic & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r yearMaxDALYsChronic`. The burden of HCV related to injecting drug use increased until `r maxDALYS$year` with `r maxDALYS$per100k` DALYs/100,000 inhabitants and decreased to `r DALYs2015HCV` DALYs/100,000 in 2015. 
+
+###Conclusion
+The burden of HCV associated with injecting drug use is considerable in Norway, which chronic HCV infection contributing most to the total burden. This model can be used to estimate the impact of different interventions on the HCV burden in Norway and to perform cost-benefit analyses of various public health measures.
+
+
+## Introduction
+
+Worldwide,an estimated 185 million people are chronically infected with hepatitis C virus (HCV) [@lozano_global_2012]. Untreated, 7-18% of those infected progress to liver disease within 20 years, e.g. liver failure, cirrhosis, hepatocellular carcinoma (HCC) and subsequently death [@seeff_natural_2002]. An estimated 500,000 people die from HCV related liver diseases yearly [@lozano_global_2012]. The natural history of HCV infection has been difficult to clearly define due to the long course of the disease. The prevalence of cirrhosis is estimated to be around 16% (95% CI: 14-19%) after 20 years [@thein_estimation_2008] and the risk of developing HCC once cirrhosis developed has been estimated to be up to 3% [@fattovich_morbidity_1997; @hu_long-term_1999]. At the moment, liver transplantation (LTX) is the only curative treatment for end stage liver disease caused by HCV  [@brown_hepatitis_2005].
+
+Surveillance of HCV is challenging for several reasons. Infection can be asymptomatic for many years [@seeff_natural_2002] and therefore many people may only become aware during routine screening of risk groups, when a blood test reveal increased liver function tests or when symptoms arise; some will even progress through life without ever developing symptoms [@seeff_natural_2002]. Few people presents with an acute stage of HCV and current laboratory tests cannot distinguish between acute and chronic HCV infection, making incidence estimation difficult. In addition,  PWIDs may be less likely to seek health care [@nelson_global_2011; @shepard_global_2005].
+
+The prevalence of HCV infection in the general population in Norway is low. HCV antibodies (indicating current infection, clearance or successful treatment of HCV infection) were detected in 0.8% of the Norwegian population in 2000-2001 [@dalgard_hepatitis_2003]. Current infection, identified by HCV-RNA, was present in 0.5% of the population [@dalgard_hepatitis_2003]. Like in most developed countries, the primary mode of HCV transmission in Norway is through sharing of needles, syringes and drug injection paraphernalia amongst people who inject drugs (PWIDs). However, immigrants from high-incidence countries account for a considerable number of patients with liver disease and those infections are often not related to drug use. In 85% of all HCV cases notified to the Norwegian Surveillance System for Communicable Diseases (MSIS) injecting drug use was the suspected route of transmission  [@blystad_arsrapport_2013]. 
+
+In Norway, HCV antibody tests have been available since 1990. Notification of acute HCV infection (based on clinical symptoms and positive HCV antibody test) has been mandatory since 1992. From 2008 onwards, all HCV positive cases have been notifiable to MSIS by both clinicians and laboratories [@blystad_arsrapport_2013]. No distinction is made between acute and chronic HCV infection and there is considerable uncertainty about the current burden of hepatitis C in Norway. 
+
+Interferon (IFN)-based treatment regimens have been the standard of care for chronic HCV infection. These therapies are associated with insufficient response and frequent side effects, resulting in a limited number of patients treated. With the recent introduction of direct-acting antivirals (DAAs) higher treatment success, fewer side effects, and more simple regimens can be expected. More patients will be eligible for treatment, but higher prices may restrict wide usage. A burden of disease model for HCV among PWIDs will enable us to estimate the impact of implementing such new regimes.  
+
+The aim of the present study is to employ mathematical modelling to estimate the incidence and disease burden of HCV among active and former PWIDs in Norway, in order to provide important information needed to prioritize public health measures for HCV in Norway.
+
+
+## Methods
+### Markov model
+We constructed a Markov model for the natural history model of HCV, which follows the disease dynamics in a population over time, in former and current PWID including compartments with eight different HCV-related health states (HCV negative susceptible, acute HCV infection, chronic HCV infection, HCV positive and cirrhosis, HCV negative and cirrhosis, HCC, LTX, HCV related mortality; Figure 1). The annual transition probabilities between compartments were estimated using a numerical optimizer [@zhu_algorithm_1997] (details further in supplementary material) where the probability estimates were restricted to be within bounds determined by previous estimates in the literature (Table 1).
+
+The first compartment contains HCV negative, susceptible, current PWIDs, which has an influx of newly started PWIDs (Figure 1). Among active PWIDs, there is a risk of contracting HCV and transfer to the compartment with acute HCV infection. These people will either clear infection and return to the HCV negative (susceptible) group or develop a chronic HCV infection. People are classified as having chronic infection if the HCV infection is not spontaneously cleared within one year and if they have not developed cirrhosis. As we are focused on HCV infections associated with drug use, we assume that former PWIDs have no risk of acquiring HCV infection, unless they resume injecting drugs and return to the active PWIDs part of the model. Individuals with chronic infection can develop cirrhosis and subsequently HCC. Former PWIDs with cirrhosis and/or HCC can receive treatment for the liver disease by getting a LTX. Individuals can die from HCV related causes after developing cirrhosis, HCC or after LTX. Individuals receiving a LTX have an increased risk of mortality for the following year, mainly related to surgical and early post-operative complications. HCV related mortality in individuals with cirrhosis is reduced by a factor of five after successfully receiving HCV treatment and becoming HCV negative [@aberg_differences_2015].
+ 
+From chronic HCV and chronic HCV with cirrhosis, individuals can receive successful HCV treatment and return to the respective HCV negative, susceptible compartment. Age-specific mortality is taken into account, including additional risk of mortality for PWIDs (table 1). The model is replicated for active PWIDs, former PWIDs who will relapse, and former PWIDs who will never relapse. In all stages of the disease individuals can either stop injecting drugs (i.e. transfer from active PWIDs to former PWIDs) or start injecting drugs (transfer from former PWIDs who will relapse to active PWIDs) or stop with injecting completely (transfer from PWIDs to former PWIDs who will never relapse). In addition, the model considers HCV infection with three different genotypes that have distinct HCV treatment probabilities, successful or unsuccessful treatment and the model is age-stratified into one-year age groups (1-100 years).
+
+###Data sources and parameter estimation
+We based yearly transition rates on literature, the Norwegian Surveillance System for Communicable Diseases (MSIS) for genotype distribution, the Norwegian death registry for mortality rates, and Norwegian Institute for Alcohol and Drug Research (SIRUS) for entry and exit rates among IDU. The model was fitted to absolute numbers using data from SIRUS, national patient registry (NPR), Norwegian cancer registry (NCR), Nordic Liver Transplant Registry (NLTR) and Norwegian death registry. Detailed information can be found in table 1. In the model we have taken into account the spread of PWID in Norway based on the annual number of drug-related deaths in each Norwegian county (for detailed information see supplementary material).
+
+### Statistical methods 
+
+#### Model fitting 
+
+We fitted the model to data described above to generate outcomes consistent with available data. We ran the model from 1973 (the start of the injecting epidemic in Norway) to 2030. We used a numerical optimizer [@zhu_algorithm_1997] to find the transition parameters that gave the smallest weighted least-squares error when comparing model estimates to observed data. The transition probability boundaries were specified using literature and data from Norwegian registries (Table 2). After transition probabilities were estimated, confidence intervals for each probability were calculated using a likelihood ratio test. Subsequently, 1000 random draws of each transition probability were drawn from a random beta distribution, calibrated using the methods of moments. For each of these 1000 draws, the model was run and estimates for incidence, prevalence, years of life lost (YLLs) due to premature death, years lived with disabilities (YLDs) and disability adjusted life years (DALYs) were calculated. The 2.5th and 97.5th percentiles were saved as the 95% confidence interval. Model fit to observed data was evaluated visually for each variable (Figure S3). 
+
+The model was implemented in R (software available at https://www.r-project.org/). More detailed methods are available in the supplemental materials.
+
+## Results
+
+We estimated the number of PWIDs newly infected with HCV, using the number of individuals that transition from susceptible to acute HCV infection each year (Figure 2). Since the start of injecting drug use in Norway in 1973, we see an increase in number of newly HCV infected PWIDs, mostly due to increasing numbers of active PWIDs (Figure 2). After 2000 the number of newly HCV infected PWIDs decreased to `r value2013Incidence` in 2013.
+
+The total estimated number of active PWIDs (Figure 3A) increased from 1973 to 2002, then decreased and stabilised at around 9,000 active PWIDs (estimated `r mPWID2013` PWIDs in 2013) (Figure 3). Number of former PWIDs has been increasing, with the steepest increase up to 2005. The estimated proportion of HCV among PWIDs has been moderately stable from 2000 (`r value2000HCVPercPWID`%=`r numerator2000HCVPercPWID`/`r denominator2000HCVPercPWID`) to 2013 (`r value2013HCVPercPWID`%=`r numerator2013HCVPercPWID`/`r denominator2013HCVPercPWID`).
+
+The estimated number of people living with cirrhosis and HCC attributable to HCV was predicted to increase until `r yearMaxCirHCCTrans`(`r valueMaxCirHCCTrans` people) (Figure 3). The total number of yearly deaths due to HCV was predicted to monotonically increase, reaching `r valueMaxDeath` deaths in `r yearMaxDeath` (Figure 3).
+
+The DALYs among active PWIDs were estimated to peak in `r yearMaxDALYsPWID` with `r valueMaxDALYsPWID` DALYs (`r valuePer100kMaxDALYsPWID`/10,000 PWIDs) and to decrease to `r value2030DALYsPWID` DALYs (`r valuePer100k2030DALYsPWID`/10,000 PWIDs) in 2030 (Table 3). The DALYs among former PWIDs was estimated to peak in `r yearMaxDALYsFormerPWID` with `r valueMaxDALYsFormerPWID` DALYs (`r valuePer100kMaxDALYsFormerPWID`/10,000 former PWIDs) and to decrease to `r value2030DALYsFormerPWID` DALYs (`r valuePer100k2030DALYsFormerPWID`/10,000 former PWIDs) in 2030 (Table 3).
+
+Our estimates show that chronic HCV infection contributes most to the total burden of HCV infection peaking with `r valueMaxDALYsChronic` DALYs (`r format(round(valueMaxDALYsChronic/m[type=="DALYs" & variable %in% "Total" & year==yearMaxDALYsChronic & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r yearMaxDALYsChronic` and falling to `r value2030DALYsChronic` DALYs (`r format(round(value2030DALYsChronic/m[type=="DALYs" & variable %in% "Total" & year==2030 & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r year2030DALYsChronic`(Figure 4). Cirrhosis was estimated to peak with `r valueMaxDALYsCirrhosis` DALYs (`r format(round(valueMaxDALYsCirrhosis/m[type=="DALYs" & variable %in% "Total" & year==yearMaxDALYsCirrhosis & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r yearMaxDALYsCirrhosis` and fall to `r value2030DALYsCirrhosis` DALYs (`r format(round(value2030DALYsCirrhosis/m[type=="DALYs" & variable %in% "Total" & year==2030 & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r year2030DALYsCirrhosis`. HCC is estimated to peak with `r valueMaxDALYsHCC` DALYs (`r format(round(valueMaxDALYsHCC/m[type=="DALYs" & variable %in% "Total" & year==yearMaxDALYsHCC & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r yearMaxDALYsHCC` and fall to `r value2030DALYsHCC` DALYs (`r format(round(value2030DALYsHCC/m[type=="DALYs" & variable %in% "Total" & year==2030 & prettyName=="HCV related"]$value*100,1),nsmall=1)`%) in `r year2030DALYsHCC`. Chronic HCV infection contributed most to the YLDs, while death due to HCV related cirrhosis accounts for most of the YLLs (Figure 4). 
+
+We used our estimates of total DALYs, YLLs and YLDs among PWIDs to calculate the burden of HCV caused by injecting drug use in Norway (Figure 5).The total burden increased since 1973 and peaked in `r maxDALYS$year` with `r maxDALYS$per100k` DALYS per 100,000 inhabitants. Since then the burden of HCV related to injecting drug use has been decreasing, but is still estimated to be `r DALYs2013HCV` per 100,000 in 2013. Yearly estimates are provided in the supplemental materials.
+
+## Discussion
+The estimated total HCV burden related to injecting drug use was `r DALYs2015HCV` per 100,000 inhabitants in Norway in 2015. Chronic HCV infection contributed most to the total burden of HCV infection and an estimated  `r value2015Incidence` PWIDs are newly infected with HCV annually. 
+
+The Global Burden of Diseases, Injuries, and Risk Factors Study (GBD) [@salomon_common_2012; @institute_for_health_metrics_and_evaluation_global_2016] estimated that 'Communicable, maternal, neonatal and nutritional disorders' burden was 1055 DALYs per 100,000 in Norway (4% of all DALYs) in 2010. We estimated that the HCV burden related to injecting drug use was `r DALYs2010[["HCV related"]]` per 100,000 in the same year. This illustrates the impact of HCV infection in a relatively small risk group on the total population. The estimated burden of acute HCV infection was 2.31 DALYs per 100,000 by GBD versus our estimate of `r DALYs2010[["HCV+ acute"]]` DALYs per 100,000. The GBD estimates that cirrhosis and HCC due to HCV results in 53.97 and 22.51 DALYs per 100,000 respectively, compared with our estimates of `r DALYs2010[["Cirrhosis"]]` DALYs per 100,000 for cirrhosis and `r DALYs2010[["HCC"]]` DALYs per 100,000 for HCC in Norway. Even though our estimates diverged from the GBD study, they were in the same magnitude, which supports the validity of our results. Another study estimated that burden of HCV in Norway in 2004 was 40.25 DALYs per 100,000, but only included acute HCV infection, cirrhosis and HCC [@muhlberger_hcv-related_2009]. When combining these sequela, our estimate would be `r DALYs2004HCV` DALYs per 100,000 in 2004, suggesting that estimates from our model are in line with previous studies using different methods.
+
+Studies on the burden of HCV infection use HCV-attributable fractions from literature when specific HCV data were not available for a specific country [@global_burden_of_hepatitis_c_working_group_global_2004; @nelson_global_2011; @muhlberger_hcv-related_2009]. The use of such attributable fractions may yield an inaccurate result for the burden of disease associated with HCV infections in specific countries. For example, a study reported that in European countries with low child mortality and low adult mortality, 38% of cirrhosis cases were contributed to HCV infections [@perz_contributions_2006]. However, a Norwegian study showed only 13% of cirrhosis cases to be associated with HCV infections [@haukeland_incidence_2007]. Therefore we used Norwegian estimates when available to ensure more accurate estimates. 
+
+The Norwegian surveillance system of HCV cannot provide an accurate picture of the current incidence and prevalence of HCV due to asymptomatic nature of the disease. This model relied on outcomes more likely to be diagnosed, such as cirrhosis and HCC, to estimate the incidence and prevalence of HCV infection. Our model provided estimates on the number of newly infected PWIDs and the total number of PWIDs with HCV. Those figures could be compared with the numbers reported to the Norwegian surveillance system and used to estimate the underreporting or underdiagnoses of HCV in Norway.  
+
+In our model, people who clear HCV or have a successful treatment return to the HCV negative susceptible group. Results from studies of reinfection risk after spontaneous clearance in PWIDs are conflicting [@grebely_hepatitis_2012]. We choose to consider the risk of reinfection the same as risk of infection, as we had no observable data on reinfection to fit against, we preferred to be on the side of caution. Furthermore, due to low treatment numbers, we did not expect this to have a material impact on our estimates.
+
+We used data on HCV associated cirrhosis among PWIDs from one hospital whose catchment area has more immigrants from high incidence countries compared to the rest of Norway. While we included only those with a history of injecting drug use, these numbers may still over-represent immigrants from high incidence countries compared to data from other Norwegian hospitals. As such, care should be taken when interpreting our results. However, no transition probabilities relating to cirrhosis were estimated to be on the boundaries as defined by our literature search. Therefore, we have confidence that our estimates are not biased to the point that they are impossible according to the literature.
+
+We used data on patients transplanted in Norway from NLTR to fit our model [@fosby_liver_2015]. Number of individuals receiving a LTX is not only related to demand of LTX, but also to the availability. We therefore included an increased transition rate for receiving a LTX. Active PWIDs are not eligible for LTX and 6 months of abstinence (with some exceptions) is required for those with alcohol abuse in Norway. This could result in many HCV positive cirrhosis or HCC patients not being eligible for LTX. In addition, we only took into account mortality in the first year after the LTX, whereas mortality in the years following LTX is also increased compared to the general population, especially among those with HCV infection due to re-infection of the graft [@aberg_differences_2015]. Therefore, our mortality estimates due to LTX are likely to be underestimated [@aberg_differences_2015].
+
+One weakness of our model is that data came from a number of different sources, each with their own biases, delays in registration, and underreporting. Our model treated each data source as equally trustworthy and did not correct for any underreporting, as we did not have accurate numbers for underreporting in the various compartments. Experts in the field estimate that 50% of all cirrhosis cases are not reported (personal communication). Suggesting that our result could have underestimated of the actual burden of HCV associated with injecting drugs in Norway. Undiagnosed or unreported cirrhosis and HCC is thus an important limiting factor in estimating the actual burden and should therefore be further studied. Data sources used to estimate HCC, HCC death, and cirrhosis death did not report HCV specific numbers. We therefore used a correction factor based on literature [@eskesen_low_2014; @haukeland_incidence_2007]. Furthermore, some of our data sources provided prevalence data. Fitting natural history models to prevalence data is known to create artificially small confidence intervals. Caution should therefore be used when making inferences based on the confidence intervals.
+
+Most information from Norway is based on studies from Oslo. Oslo used to account for approximately 50% of all PWIDs in Norway in the mid-90s. This pattern changed over the recent years to an estimated 20% in 2013 (unpublished data) [@amundsen_hard_2010]. We added how disperse the spread of PWIDs is for each year based on data from the drug related deaths. The HCV surveillance data from MSIS indicates that PWIDs reported in Oslo are older than those reported in other parts of the country (unpublished MSIS data). This could have affected our estimates on HCV disease burden in Norway. Differences in age distribution could also have resulted in an underestimation of the burden.
+
+Our model forecasted the situation up to 2030, with current treatment and control measures, including harm reduction, testing and follow-up. Changes in these strategies may influence the burden estimates. Changes in behaviour, risk population or the type of drugs used can also affect the impact of HCV in the future.
+
+We have constructed a model to better estimate the burden of HCV infections among PWIDs in Norway. This model can be used to estimate the impact and cost-benefit of various interventions on the burden of HCV in Norway in order to assist public health decision. Especially important is estimating the impact of the new DAA's treatment regimens on the HCV burden in Norway, upscaling treatment, treating everyone or only subgroups, such as only those with advance liver disease. 
+
+
+##Financial disclosure
+The authors received no financial support for the research, authorship, and/or publication of this article.
+
+##Conflict of interest
+ The authors declare that there is no conflict of interest.
+
+
+##Acknowledgments
+We gratefully acknowledge the contribution from the virological department at NIPH, national patient registry (NPR), Norwegian cancer registry (NCR), and cause of death registry (DÅR). 
+
+
+## Figures
+### Figure 1. Compartmental model of the progression of hepatitis C (HCV) among people who inject drugs in Norway.
+![img](../../../results/Model2.png)  
+_HCV: hepatitis C; HCC: hepatocellular carcinoma_
+
+
+
+### Figure 2. Estimated number of new hepatitis C (HCV) infections among people who inject drugs in Norway from 1973 to 2030 with 95% confidence interval (shaded).
+![img](../../../results/Figure_Incidence.png)
+
+
+
+### Figure 3. Estimated number of people with hepatitis C (HCV), cirrhosis, hepatocellular carcinoma (HCC), liver transplants and mortality related to HCV among active and former people who inject drugs (PWIDs) in Norway, 1973-2030.
+![img](../../../results/Figure_Area2.png)
+
+
+### Figure 4. Estimated proportion of burden attributable to hepatitis C, cirrhosis and hepatocellular carcinoma (HCC), liver transplants and mortality related to HCV among active and former people who inject drugs (PWIDs) in Norway, 1973-2030.  
+![img](../../../results/Figure_BurdenProportion.png)
+_YLDs: years lost of disabilities; YLLs: years of life lost; DALYs; disability adjusted life years_
+
+
+### Figure 5. Estimated burden of hepatitis C associated with injecting drug use per 100,000 population with future population estimates calculated by Statistics Norway.  
+![img](../../../results/Figure_BurdenPer100k.png)
+_YLDs: years lost of disabilities; YLLs: years of life lost; DALYs; disability adjusted life years_
+
+
+
+
+## Tables
+
+### Table 1. Summary of main data sources for the model.
+```{r, echo=FALSE, strip.white=FALSE}
+
+z <- list()
+
+z[[1]] <- data.frame(var="Infectivity of PWIDs", comment="The infectivity of PWIDs was modulated by a) the proportion of PWIDs who were infectious, b) the dispersion of the injecting epidemic throughout Norway (the more disperse, the less infectious) (Figure S1), and c) the coverage of needle and syringe programs (Figure S1).")
+
+z[[2]] <- data.frame(var="People who inject drugs", comment="Norwegian Institute for Alcohol and Drug Research (SIRUS) has non-internally consistent numbers of new PWIDs and prevalence of active PWIDs, former PWIDs who will relapse, and former PWIDs who will never relapse for each year from 1973 to 2013. We subsequently estimated internally consistent PWID numbers from 1973 to 2030 (Figure S2).")
+
+z[[3]] <- data.frame(var="Age of injecting debut", comment="Age of injecting debut was taken from SIRUS estimates in 1975, 1985, and 1995, and the life quality report from 2003 to 2012. We predicted mean age of injecting debut from 1973 to 2030 using linear regression (Figure S3).(REF)")
+
+z[[4]] <- data.frame(var="PWIDs with HCV", comment="The proportion of PWIDs with HCV RNA was based on data collected through cross sectional health studies among PWIDs attending low threshold harm reduction-based health care centers in Oslo targeted towards drug users [@blystad_arsrapport_2013].")
+
+z[[5]] <- data.frame(var="Cirrhosis", comment="We received data from one hospital (Akershus universitetssykehus HF) on the number of PWIDs (current and former) treated with cirrhosis associated with HCV in 2013. We extrapolated the total number of cases treated in Norway by dividing by the hospital's catchment area (10%).")
+
+z[[6]] <- data.frame(var="HCC disease", comment="The number of liver cancer or HCC cases were obtained from the Norwegian cancer registry (NCR) using ICD10 code C22 (Malignant neoplasm of liver and intrahepatic bile ducts, which includes HCC). Numbers were adjusted by the proportion of HCC among those with ICD10 code C22 (77%) and for disease attributable to HCV in Norway (26%), resulting in 20% of the extracted data estimated to be HCV associated HCC.[@eskesen_low_2014]")
+
+z[[7]] <- data.frame(var="Liver transplants", comment="From the Nordic Liver Transplant Registry (NLTR)[@fosby_liver_2015] we used the number of all liver transplants performed from 2000 to 2013 with antibodies against HCV as targets for liver transplants in the model. Mortality within the first year after the LTX is considered as HCV related mortality. After the first year the individuals who received a LTX have the same risk as the rest of the population in the model.")
+
+z[[8]] <- data.frame(var="Cirrhosis mortality", comment="Aggregate data on death entries (2000-2013) were obtained from the \"Norwegian Cause of Death Registry\". We included individuals with an underlying cause of cirrhosis (ICD10 codes K74.3, K74.4, K74.5 and K74.6). The mortality numbers were then adjusted to the attributable risk of hepatitis C (14%)[@haukeland_incidence_2007].")
+
+z[[9]] <- data.frame(var="HCC mortality", comment="Aggregate data on death entries (2000-2013) were obtained from the \"Cause of Death Registry\". We included individuals with an underlying cause of HCC (ICD10 code C22). The mortality numbers were adjusted for HCC among those with ICD10 code C22 (77%) and for to the attributable risk of hepatitis C (26%).[@eskesen_low_2014]")
+
+z[[10]] <- data.frame(var="Treatment rates", comment="The Norwegian prescription database (NorPD) was used to estimate the treatment rates for HCV in Norway. Genotype distribution of HCV was based on data from the NIPH.[@blystad_arsrapport_2013] We estimated treatment success for each year, combining the absolute number of treatments from NorPD with treatment response and duration of treatment per genotype.")
+
+z[[11]] <- data.frame(var="Disability weightings", comment="Using the Global Burden of Disease study 2010 disability weights[@salomon_common_2012], we assigned disability weights to the various health stages in the model.")
+
+z <- rbindlist(z)
+row.names(z) <- z$var
+z[,var:=NULL]
+z[,comment:=as.character(comment)]
+
+htmlTable::htmlTable(z,header=c("Source"),align="l",rgroup=c("Used to hardcode parts of the model","Model Targets","Used to calculate health estimates from output"),n.rgroup=c(3,7,1))
+```
+
+### Table 2. Summary of model parameters used in the compartmental model to estimated the burden of hepatitis C (HCV) among people who injecting drugs (PWIDs) in Norway, 1973-2030.
+```{r, echo=FALSE, strip.white=FALSE}
+readRDS("../../../results/Table_Parameters.RDS")
+```
+_PWID: people who inject drugs, S: susceptible, AI: acute HCV infection, CI: chronic HCV infection, T: treatment,C: cirrhosis, HCC: hepatocellular carcinoma, LT: liver transplant, M: HCV associated mortality_  
+
+
+
+
+### Table 3. Summary of model estimates from the compartmental model to estimated the burden of hepatitis C (HCV) among people who inject drugs (PWIDs) in Norway, 2000-2030.
+```{r, echo=FALSE, strip.white=FALSE}
+readRDS("../../../results/Table_SummaryPerc2.RDS")
+```
+_PWID: people who inject drugs, HCC: hepatocellular carcinoma; YLDs: years lost of disabilities; YLLs: years of life lost; DALYs; disability adjusted life years_  
+
+
+
+
+
+## Supplemental material
+
+### Figure S1. Needle and syringe exchange progammes (NSP) Coverage and GINI coefficient of county drug deaths in Norway, 1973-2030.
+![img](../../../results/Figure_NeedleAndGINI.png)
+
+
+
+### Figure S2. Fitting of the estimated number (line) of people who inject drugs (PWIDs) with reported numbers (red dots) (devided by active and former PWIDs) in Norway, 1973-2030.
+![img](../../../results/Figure_PWID.png)
+
+
+
+
+### Figure S3. Mean age of injecting debut among people who inject drugs (PWIDs) in Norway between 1973 and 2013.
+![img](../../../results/Figure_AgeDebut.png)
+
+
+
+### Figure S4. Fitting of the estimates (line) with reported numbers (red dots) for hepatitis C (HCV) infection, cirrhosis, hepatocellular carcinoma (HCC), liver stransplant (LT) and associated mortality in Norway, 1973-2030. _shaded area shows 95% confidence interval_ _HCC:hepatocellular carcinoma; LT: Liver transplant_
+![img](../../../results/Figure_Fitting.png)
+
+### Figure S5. Mean estimated age of people who inject drugs (PWIDs) in Norway between 1973 and 2030  
+![img](../../../results/Figure_Age.png)
+_HCC: hepatocellular carcinoma_ 
+
+
+
+
+### Table S1. Summary of model estimates from the compartmental model to estimated the burden of hepatitis C (HCV) associated with people who inject drugs (PWIDs) in Norway.
+```{r, echo=FALSE, strip.white=FALSE}
+readRDS("../../../results/Table_Summary.RDS")
+```
+
+### Supplemental Methods
+
+#### Markov model
+We constructed a Markov model for the natural history model of HCV, which follows the disease dynamics in a population over time, in former and current PWID including compartments with eight different HCV-related health states (HCV negative susceptible, acute HCV infection, chronic HCV infection, HCV positve and cirrhosis, HCV negative and cirrhosis, HCC, liver transplant, HCV related mortality; figure 1). The annual transition probabilities between compartments were estimated using a numerical optimizer[@zhu_algorithm_1997] (details further below) where the probability estimates were restricted to be within bounds determined by previous estimates in the literature (Table 2).
+
+The first compartment contains HCV negative, susceptible, current PWIDs, which has an influx of newly started PWIDs (Figure 1). Among active PWIDs, there is a risk of contracting HCV and transfer to the compartment with acute HCV infection. These people will either clear infection and return to the HCV negative (susceptible) group or develop a chronic HCV infection. People are classified as having chronic infection if the HCV infection is not spontaniously cleared within one year and if they have not developed cirrhosis. As we are focused on HCV infections associated with drug use, we assume that former PWIDs have no risk of acquiring HCV infection, unless they resume injecting drugs and return to the active PWIDs part of the model. Individuals with chronic infection can develop cirrhosis and subsequently HCC. Former PWIDs with cirrhosis and/or HCC can receive treatment for the liver disease by getting a liver transplant (LTX). Individuals can die from HCV related causes after developing cirrhosis, HCC or after LTX. Individuals receiving a liver transplant have an increased risk of mortality for the following year, mainly related to surgical and early post-operative complications. HCV related mortality in individuals with cirrhosis is reduced by a factor of five after successfully receiving HCV treatment and becoming HCV negative [@aberg_differences_2015].
+ 
+From chronic HCV and chronic HCV with cirrhosis, individuals can receive successful HCV treatment and return to the respective HCV negative, susceptible compartment. Age-specific mortality is taken into account, including additional risk of mortality for PWIDs. The model is replicated for active PWIDs, former PWIDs who will relapse, and former PWIDs who will never relapse. In all stages of the disease individuals can either stop injecting drugs, i.e. transfer from active PWIDs to former PWIDs, or start injecting drugs, i.e. transfer from former PWIDs who will relapse to active PWIDs or stop with injecting completely, i.e. transfer from PWIDs to former PWIDs who will never relapse. In addition, the model considers HCV infection with three different genotypes that have distinct HCV treatment probabilities, succesful or unsuccesful treatment and the model is age-stratified into one-year age groups (1-100 years).
+
+####Data sources and parameter estimation
+
+##### Drug related deaths and infectivity of PWIDs
+
+The probability of someone transitioning from susceptible to infected was calculated through the following algorithm:
+
+$$
+p_{new1} = 1 - (1 - p_{old})^{10 \times \frac{NumPWIDWithHCV}{NumPWID} \times GINIDeathsDrugsByCounty}
+$$
+
+$p_{old}$ is the probability that a person is infected by one PWID (displayed in Table 2). We assume that a PWID has a social circle of 10 other PWIDs. We therefore adjust this probability to be the probability that a person is infected by at least one of ten PWIDs (the number 10 is arbitrary and $p_{old}$ will scale to whatever number we choose). We then calculate the Gini coefficient of county-level drug deaths for each year and used this to model the infectivity. We used the annual number of drug-related deaths in each Norwegian county as a proxy for the size of the injecting epidemic (e.g. number of PWIDs) in those regions.[@skretting_rusmidler_2015] If all drug deaths occured in one county, then the Gini coefficient would be one, and the infectivity high. As drug deaths become more equally distributed throughout the country, the Gini coefficient drops, and so does infectivity.
+
+The Gini coefficient variable was included to damper the homogeneous mixing assumption without adding too much complexity to the model. Without the Gini coefficient variable the percentage of PWIDs with HCV was consistently overestimated by 15-20 percentage points. The time series for the Gini coefficient is displayed in Figure S1.
+
+##### Drug related deaths and needle and syringe program coverage
+
+We used the annual number of drug-related deaths in each Norwegian county as a proxy for the size of the injecting epidemic in each county. As of 2013, the four areas in Norway with the most PWIDs (Oslo, Bergen, Trondheim, and Stavanger/Sandnes) are running needle and syringe exchange programs with complete coverage of the PWIDs in their catchment areas. That is, free needles and syringes are available for all PWIDs who want them. For Oslo, we had approximate numbers of needles handed out every year, so we constructed a new variable: annual needles handed out per annual drug related deaths. Assuming full coverage in 2013, we extrapolated the 2013 association between annual needles handed out per annual drug related deaths and 100% NSP coverage into historical NSP coverage proportions. For Bergen, Trondheim, and Stavanger/Sandnes, we did not have historical coverage proportions, so we assumed that coverage started in 1992 (at zero) and increased in a linear manner to full coverage in 2013. 
+
+Taking into account time-series of needle exchange program coverage in the four major areas (assuming no coverage in other areas of Norway) and an estimation of the proportion of the total PWIDs in each of these regions, we estimated the needle exchange coverage for all of Norway (Figure S1). This variable was included as a modifying factor against infectiousness, and its efficacy was estimated from the data. [@skretting_rusmidler_2015; @lohiniva_rusmidler_2001] The infectiousness transition probability was modified in the following manner:
+
+$$
+p_{new2} = p_{new1} \times (1 - EstimatedCoefficient \times ProgramCoverage)]
+$$
+
+##### People who inject drugs 
+
+Norwegian Institute for Alcohol and Drug Research (SIRUS) has estimated the number of new PWIDs and prevalence of active PWIDs, former PWIDs who will relapse, and former PWIDs who will never relapse for each year from 1973 to 2013. These estimates were not internally consistent, so we estimated transition rates to best fit the non-consistent data, and in-turn obtain internally consistent estimates for the PWID envelope (Figure S2). We extended and repeated the number of new PWIDs in 2013 through to 2030.
+
+##### Age of injecting debut 
+
+Age of injecting debut was taken from SIRUS estimates in 1975, 1985, and 1995, and the life quality report from 2003 to 2012. A relatively linear trend in the age of debut was observed over time, so we fit a linear regression model to the data and predicted mean age of injecting debut from 1973 to 2030 (Figure S3).(REF)
+
+##### PWIDs with HCV
+
+The proportion of PWIDs with HCV RNA was based on data collected through cross sectional health studies among PWIDs attending low threshold harm reduction-based health care centers in Oslo targeted towards drug users [@blystad_arsrapport_2013].
+
+##### Cirrhosis 
+
+We received data from one hospital (Akershus universitetssykehus HF) on the number of PWIDs (current and former) treated with cirrhosis associated with HCV in 2013. From this number we estimated the total number of cases treated in Norway that year to be ten time larger as the hospital has a catchment area of 10% of the Norwegian population.
+
+##### HCC disease 
+
+Aggregated data on the number of people with liver cancer or HCC were obtained from the Norwegian cancer registry (NCR) using ICD10 code C22 (Malignant neoplasm of liver and intrahepatic bile ducts, which includes HCC). Numbers were adjusted according to the proportion of HCC among those with ICD10 code C22 (77%) and for disease attributable to HCV in Norway (26%), resulting in 20% of the extracted data estimated to be HCV associated HCC.[@eskesen_low_2014]
+
+##### Liver transplants  
+
+All liver transplants (LTX) in Norway are performed in one hospital (Oslo University Hospital, Rikshospitalet). Data on all patients receiving a liver allograft since the start of the program in 1984 and patients entering the waiting list after 1990 have been recorded. In  Nordic Liver Transplant Registry (NLTR).[@fosby_liver_2015] We used aggregated data on all liver transplants performed from 2000 to 2013 in Norway, including information on listing diagnosis (HCV cirrhosis and HCC). We used the number of patients with antibodies against HCV as  targets for liver transplants in the model. Mortality within the first year after the LTX is considered as HCV related mortality. After the first year the individuals who received a LTX have the same risk as the rest of the population in the model.
+
+#####  Cirrhosis mortality 
+
+Aggregate data on death entries (2000-2013) were obtained from the "Norwegian Cause of Death Registry". We included individuals with an underlying cause of cirrhosis (ICD10 codes K74.3, K74.4, K74.5 and K74.6). The mortality numbers were then adjusted to the attributable risk of hepatitis C (14%) and used as a target in the model.[@haukeland_incidence_2007]
+
+##### HCC mortality  
+
+Aggregate data on death entries (2000-2013) were obtained from the "Cause of Death Registry". We included individuals with an underlying cause of HCC (ICD10 code C22). The mortality numbers were adjusted for HCC among those with ICD10 code C22 (77%) and for to the attributable risk of hepatitis C (26%), before we used them as a target in the model.[@eskesen_low_2014]
+
+##### Treatment rates 
+
+The Norwegian prescription database (NorPD) was used to estimate the treatment rates for HCV in Norway. Genotype distribution of HCV was based on data from the NIPH.[@blystad_arsrapport_2013] We estimated treatment success for each year, combining the absolute number of treatments from NorPD with treatment response and duration of treatment per genotype.
+
+##### Disability weightings
+Each health stage in the model can be assigned with a disability weight to calculate the disability adjusted life years (DALYs), which provides a quantitative measure of health loss due to disease. DALYs estimate years of life lost (YLLs) due to premature death, as well as years of healthy life lost due to disability  from disease and injury (years lived with disabilities: YLDs). The model output can be used to assess and compare the relative impact of different diseases, injuries and risk factors on populations. Using the Global Burden of Disease study 2010 disability weights[@salomon_common_2012], we assigned disability weights of 0.254 (Infectious disease: post-acute consequences (fatigue, emotional lability, insomnia)) to acute HCV, chronic HCV, and chronic HCV under treatment. Weights of 1-(1-0.254)*(1-0.194) (Infectious disease: post-acute consequences (fatigue, emotional lability, insomnia) and Decompensated cirrhosis of the liver) were assigned to chronic HCV with cirrhosis and chronic HCV with cirrhosis under treatment. Weights of 0.194 (Decompensated cirrhosis of the liver) were assigned to cirrhosis without chronic HCV. Weights of 1-(1-0.254)*(1-0.508) (Infectious disease: post-acute consequences (fatigue, emotional lability, insomnia) and Terminal phase: with medication (for cancers, end-stage kidney or liver disease)) were assigned to HCC and LTX.
+
+#### Statistical methods 
+
+##### Model fitting 
+
+We fitted the model to data described above to generate outcomes consistent with available data.
+
+We ran the model from 1973 (the start of the injecting epidemic in Norway) to 2030. We used a limited-memory Broyden-Fletcher-Goldfarb-Shanno optimizer with bounded constraints  (L-BFGS-B[@zhu_algorithm_1997]) to find the transition parameters that gave the smallest weighted least-squares error when comparing model estimates to observed data.
+
+The transition probability boundaries were specified using literature and data from Norwegian registries (Table 2). The yearly numbers of new PWIDs and relapse/cessation rates were provided by a separate estimation process (as detailed above), and these were hardcoded into the model.
+
+After transition probabilities were calculated for each year, confidence intervals for each probability were calculated using a likelihood ratio test. Simply stated, the likelihood of the data for that year coming from a model with the calculated transition probabilities was calculated. Each transition probability was then walked to a minimum and maximum value, corresponding to the point where the likelihood ratio test became significant. A crude estimation of the standard error was then calculated by dividing the width of the confidence interval by 3.92 (2*1.96).
+
+Subsequently, 1000 random draws of each transition probability were drawn from a random beta distribution, calibrated using the methods of moments. For each of these 1000 draws, the model was run and estimates for incidence, prevalence, YLLs, YLDs, and DALYs were calculated. The 2.5th and 97.5th percentiles were saved as the 95% confidence interval. Model fit to observed data was evaluated visually for each variable (Figure S3).
+
+The model was implemented in R (software available at https://www.r-project.org/). The full code (including source code for necessary additional packages/libraries) used to fit the model and subsequently generate all estimates, graphs, and tables is also provided on www.fhi.no/. 
+
+
+##References
+

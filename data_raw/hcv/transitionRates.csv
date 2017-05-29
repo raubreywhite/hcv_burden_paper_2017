@@ -1,0 +1,19 @@
+State;Leaving;Prob_low;Prob_high;Description
+S;HCV_AI;0.01;0.4;Expert opinion
+HCV_AI;HCV_CI;0.71;0.86;Seeff 2009
+HCV_AI;S;0;0;
+HCV_CI;T_CI;0.02;0.08;Dalgard 2014
+HCV_CI;HCV_C;0.001;0.052;Martin 2012 
+HCV_C;T_C;0.01;0.4;Expert opinion
+HCV_C;HCC;0.014;0.084;Martin 2012 / Sangiovanni 2006 / Hutchinson
+HCV_C;LT;0.00001;0.02;Expert opinion
+HCV_C;M;0.025;0.035;Hutchinson 2005 (decompensated!), sangiovanni
+HCC;LT;0.012;0.056;Martin 2012
+HCC;M;0.545;0.676;Hutchinson 2005
+LT;HCV_CI;0.05;0.5;Expert opinion
+LT;S;0;0;
+LT;M;0.11;0.18;Hitchinson 2005
+T_CI;HCV_CI;0;0;
+T_CI;S;0;0;
+T_C;HCV_C;0;0;
+T_C;S_C;0;0;
