@@ -5,14 +5,15 @@ library(tidyr)
 
 # This comes from github.com/raubreywhite/RAWmisc
 # Install using: devtools::install_github("raubreywhite/RAWmisc")
-RAWmisc::InitialiseProject(
-  PROJHOME = "/analyses/hcv_burden_paper_2017/code/hcv/",
-  PROJRAW = "/analyses/hcv_burden_paper_2017/data_raw/hcv/",
-  PROJCLEAN = "/analyses/hcv_burden_paper_2017/data_clean/hcv",
-  PROJBAKED = "/analyses/hcv_burden_paper_2017/results_baked/hcv/",
-  PROJFINAL = "/analyses/hcv_burden_paper_2017/results_final/hcv/",
-  PROJSHARED = "/analyses/hcv_burden_paper_2017/results_shared/hcv/")
+RAWmisc::AllowFileManipulationFromInitialiseProject()
 
+RAWmisc::InitialiseProject(
+  HOME = "/git/hcv_burden_paper_2017/code/hcv/",
+  RAW = "/git/hcv_burden_paper_2017/data_raw/hcv/",
+  CLEAN = "/git/hcv_burden_paper_2017/data_clean/hcv",
+  BAKED = "/git/hcv_burden_paper_2017/results_baked/hcv/",
+  FINAL = "/git/hcv_burden_paper_2017/results_final/hcv/",
+  SHARED = "/git/hcv_burden_paper_2017/results_shared/hcv/")
 
 saveRDS(meanAge,file.path(RAWmisc::PROJ$BAKED,"AgeDebut_meanAge.RDS"))
 saveRDS(sirusAges,file.path(RAWmisc::PROJ$BAKED,"AgeDebut_sirusAges.RDS"))
