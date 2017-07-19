@@ -43,7 +43,7 @@ We constructed a compartmental model for HCV infections in Norway among active a
 ## Running the model
 ### Dependencies
 
-- R 3.4.0
+- R v3.4.0
 - data.table
 - pomp
 - tidyr
@@ -52,7 +52,22 @@ We constructed a compartmental model for HCV infections in Norway among active a
 - devtools
 - ggplot2
 
-```
+`
 install.packages(c("data.table", "pomp", "tidyr", "htmlTable", "devtools", "ggplot2"))
 devtools::install_github("raubreywhite/RAWmisc")
-```
+`
+
+### Setup and code execution
+
+1. Clone the repository into your desired folder
+2. Open `code/hcv/Run_Linux.R`
+3. Edit lines `12-17` to reflect your folder locations
+4. Run `code/hcv/Run_Linux.R`
+
+## Results
+
+All results are available at https://github.com/raubreywhite/hcv_burden_paper_2017/tree/master/results_final/hcv
+
+
+
+
