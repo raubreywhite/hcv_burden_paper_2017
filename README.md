@@ -44,18 +44,20 @@ We constructed a compartmental model for HCV infections in Norway among active a
 ### Dependencies
 
 - R v3.4.0
+```
+install.packages(c("data.table", "pomp", "tidyr", "htmlTable", "devtools", "ggplot2"))
+```
 - data.table
 - pomp
 - tidyr
 - htmlTable
-- RAWmisc
-- devtools
 - ggplot2
-
-`
-install.packages(c("data.table", "pomp", "tidyr", "htmlTable", "devtools", "ggplot2"))
+- devtools
+```
 devtools::install_github("raubreywhite/RAWmisc")
-`
+```
+
+- RAWmisc
 
 ### Setup and code execution
 
