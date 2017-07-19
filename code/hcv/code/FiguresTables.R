@@ -697,8 +697,8 @@ FigureIncidence <- function(){
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("")
   q <- q + ggplot2::expand_limits(y=0)
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Incidence.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Incidence.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -724,8 +724,8 @@ FigureIncidenceCentre <- function(){
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("")
   q <- q + ggplot2::expand_limits(y=0)
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Incidence.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Incidence.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -768,8 +768,8 @@ FigureArea <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("",lim=c(0,12500))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Area.png"),landscape=TRUE,w=0.5,h=0.25)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Area.png"),landscape=TRUE,w=0.5,h=0.25)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -816,8 +816,8 @@ FigureArea2 <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("",lim=c(0,20000))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Area2.png"),landscape=TRUE,w=0.5,h=0.375)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Area2.png"),landscape=TRUE,w=0.5,h=0.375)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -860,8 +860,8 @@ FigureESCAIDEArea <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("",lim=c(0,20000))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_ESCAIDEArea.png"),landscape=TRUE,w=0.5,h=0.375)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_ESCAIDEArea.png"),landscape=TRUE,w=0.5,h=0.375)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -924,8 +924,8 @@ FigureAge <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("Mean age\n",lim=c(10,65))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Age.png"),landscape=TRUE,w=0.5,h=0.375)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Age.png"),landscape=TRUE,w=0.5,h=0.375)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -967,8 +967,8 @@ FigureFitting <- function(){
   
   q <- q + scale_x_continuous("",lim=c(2000,2013))
   q <- q + scale_y_continuous("")
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Fitting.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Fitting.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   dev.off()
 }
@@ -986,8 +986,8 @@ FigureFittingCentre <- function(file=NULL){
   q <- q + facet_wrap(~variable, scales="free")
   q <- q + scale_x_continuous("",lim=c(2000,2013))
   q <- q + scale_y_continuous("")
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_Fitting.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_Fitting.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   dev.off()
 }
@@ -1001,8 +1001,8 @@ FigureAgeDebut <- function(){
   
   q <- q + ggplot2::scale_x_continuous("Year")
   q <- q + ggplot2::scale_y_continuous("Mean age of debut",lim=c(0,30))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_AgeDebut.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_AgeDebut.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   dev.off()
   
@@ -1025,8 +1025,8 @@ FigurePWID <- function(){
   
   q <- q + ggplot2::scale_x_continuous("Year")
   q <- q + ggplot2::scale_y_continuous("Number of people",lim=c(0,15000))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_PWID.png"),landscape=TRUE,w=0.5,h=0.375)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_PWID.png"),landscape=TRUE,w=0.5,h=0.375)
   print(q)
   dev.off()
 
@@ -1068,8 +1068,8 @@ FigureESCAIDENumberHCVInfected <- function(){
   q <- q + scale_x_discrete("")
   q <- q + scale_y_continuous("",lim=c(0,14000),breaks=seq(0,14000,2000))
   q
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_ESCAIDEBar.png"),landscape=TRUE,w=0.25,h=0.375)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_ESCAIDEBar.png"),landscape=TRUE,w=0.25,h=0.375)
   print(q)
   dev.off()
 }
@@ -1102,8 +1102,8 @@ FigureEnvelopePWIDPerc <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("Prevalence of HCV within PWIDs",lim=c(0,100))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_PWIDPerc.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_PWIDPerc.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   dev.off()
 }
@@ -1171,24 +1171,24 @@ LargeSupplementalTables <- function(){
   
   v2 <- data.frame(rbind(TYPES,
                          t(l)))
-  try(write.table(v2,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Lower.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
+  try(write.table(v2,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Lower.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
   
   v2 <- data.frame(rbind(TYPES,
                          t(u)))
-  try(write.table(v2,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Upper.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
+  try(write.table(v2,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Upper.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
   
   v2 <- data.frame(rbind(TYPES,
                          t(m)))
-  try(write.table(v2,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Estimate.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
+  try(write.table(v2,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Estimate.csv"),row.names=TRUE,col.names=FALSE,sep=";"),TRUE)
   
-  try(write.table(machinel,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Lower_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
-  try(write.table(machineu,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Upper_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
-  try(write.table(machinem,file=file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Estimate_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
+  try(write.table(machinel,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Lower_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
+  try(write.table(machineu,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Upper_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
+  try(write.table(machinem,file=file.path(RAWmisc::PROJ$FINAL,"All_Summary_Estimate_machinefriendly.csv"),row.names=FALSE,col.names=TRUE,sep=";"),TRUE)
   
 }
 
 BurdenGraph <- function(){
-  x <- fread(file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Estimate_machinefriendly.csv"))
+  x <- fread(file.path(RAWmisc::PROJ$FINAL,"All_Summary_Estimate_machinefriendly.csv"))
   x <- x[type %in% c("YLLs","YLDs","DALYs") & variable=="Total" & !prettyName %in% c("HCV related","Not related to HCV","Total")]
   x[,total:=sum(value),by=.(type,year)]
   x[,proportion:=value/total]
@@ -1202,8 +1202,8 @@ BurdenGraph <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("Proportion of burden\n",lim=c(0,1))
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_BurdenProportion.png"),landscape=TRUE,w=0.5,h=0.3)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_BurdenProportion.png"),landscape=TRUE,w=0.5,h=0.3)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -1222,7 +1222,7 @@ DALYsPer100k <- function(){
   population2 <- population2[!year %in% population$year,.(pop=sum(pop)),by=.(year)]
   population <- rbind(population,population2)
   
-  x <- fread(file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Estimate_machinefriendly.csv"))
+  x <- fread(file.path(RAWmisc::PROJ$FINAL,"All_Summary_Estimate_machinefriendly.csv"))
   x <- x[type %in% c("YLLs","YLDs","DALYs") & variable=="Total" & !prettyName %in% c("HCV related","Not related to HCV","Total")]
   x <- x[,.(total=sum(value)),by=.(type,year)]
   
@@ -1236,8 +1236,8 @@ DALYsPer100k <- function(){
   
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("Burden per 100,000 population\n")
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_BurdenPer100k.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_BurdenPer100k.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()
@@ -1256,7 +1256,7 @@ DALYsPer100kForResultsAndDiscussion <- function(){
   population2 <- population2[!year %in% population$year,.(pop=sum(pop)),by=.(year)]
   population <- rbind(population,population2)
   
-  x <- fread(file.path(RAWmisc::PROJ$SHARED_TODAY,"All_Summary_Estimate_machinefriendly.csv"))
+  x <- fread(file.path(RAWmisc::PROJ$FINAL,"All_Summary_Estimate_machinefriendly.csv"))
   x <- x[type %in% c("DALYs") & variable=="Total"]
   
   plotData <- merge(x,population,by="year")
@@ -1296,8 +1296,8 @@ GraphNeedleAndGINI <- function(){
   q <- q + scale_colour_brewer("",palette="Set2")
   q <- q + scale_x_continuous("")
   q <- q + scale_y_continuous("")
-  q <- q + theme_gray(base_size=22)
-  RAWmisc::png_a4(file.path(RAWmisc::PROJ$SHARED_TODAY,"Figure_NeedleAndGINI.png"),landscape=TRUE,w=0.5,h=0.5)
+  q <- q + theme_gray(base_size=24)
+  RAWmisc::png_a4(file.path(RAWmisc::PROJ$FINAL,"Figure_NeedleAndGINI.png"),landscape=TRUE,w=0.5,h=0.5)
   print(q)
   RAWmisc::MakeFootnote("Yellow area denotes projections")
   dev.off()

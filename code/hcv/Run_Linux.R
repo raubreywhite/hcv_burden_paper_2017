@@ -2,6 +2,7 @@ library(data.table)
 library(ggplot2)
 library(pomp)
 library(tidyr)
+library(htmlTable)
 
 # This comes from github.com/raubreywhite/RAWmisc
 # Install using: devtools::install_github("raubreywhite/RAWmisc")
